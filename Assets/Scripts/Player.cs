@@ -53,8 +53,7 @@ public class Player : MonoBehaviour
     private void HandleMovement()
     {
         Vector3 moveVector = new(moveInput.x, 0, moveInput.y);
-        Vector3 targetVelocity = moveVector * movementSpeed;
-        velocity = Vector3.Lerp(velocity, targetVelocity, movementAcceleration * Time.fixedDeltaTime);
+        transform.Translate(movementSpeed * Time.deltaTime * moveVector, Space.Self);
     }
 
     private void HandleTargeting()
