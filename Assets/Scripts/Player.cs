@@ -1,7 +1,7 @@
 using System;
 using UnityEngine;
 
-[RequireComponent(typeof(Rigidbody))]
+[RequireComponent(typeof(Rigidbody), typeof(ColliderActivator))]
 public class Player : MonoBehaviour, ICombatant
 {
     [Header("Movement")]
@@ -11,9 +11,6 @@ public class Player : MonoBehaviour, ICombatant
     [Header("Looking")]
     [SerializeField] private Transform target;
     [SerializeField] private float targetingAcceleration;
-
-    [Header("Combat")]
-    [SerializeField] private float attackTime;
 
     private PlayerControls playerControls;
     private PlayerControls.GameplayControlsActions controls;
