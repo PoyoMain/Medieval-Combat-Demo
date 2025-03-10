@@ -21,6 +21,7 @@ public class Player : MonoBehaviour, ICombatant
     private Vector2 moveInput;
     private Vector3 velocity;
     private bool attackDown;
+    private bool blockDown;
 
     private Rigidbody rb;
     private Animator anim;
@@ -47,11 +48,13 @@ public class Player : MonoBehaviour, ICombatant
     {
         moveInput = controls.Move.ReadValue<Vector2>();
         attackDown = controls.Attack.WasPressedThisFrame();
+        blockDown = controls.Block.WasPressedThisFrame();
     }
 
     private void FixedUpdate()
     {
         HandleAttacking();
+        HandleBlocking();
 
         HandleMovement();
         HandleTargeting();
@@ -65,7 +68,7 @@ public class Player : MonoBehaviour, ICombatant
 
     private void HandleAttacking()
     {
-        if (attackDown && !isAttacking)
+        if (attackDown && !isAttacking && !isBlocking)
         {
             anim.SetTrigger("Attack");
         }
@@ -79,6 +82,30 @@ public class Player : MonoBehaviour, ICombatant
     public void EndAttack()
     {
         isAttacking = false;
+    }
+
+    #endregion
+
+    #region Blocking
+
+    private bool isBlocking;
+
+    private void HandleBlocking()
+    {
+        if (blockDown && !isBlocking && !isAttacking)
+        {
+            anim.SetTrigger("Block");
+        }
+    }
+
+    public void StartBlock()
+    {
+        isBlocking = true;
+    }
+
+    public void EndBlock()
+    {
+        isBlocking = false;
     }
 
     #endregion
