@@ -1,7 +1,7 @@
 using System;
 using UnityEngine;
 
-[RequireComponent(typeof(Rigidbody), typeof(ColliderActivator))]
+[RequireComponent(typeof(Rigidbody), typeof(ColliderActivator), typeof(Animator))]
 public class Player : MonoBehaviour, ICombatant
 {
     [Header("Movement")]

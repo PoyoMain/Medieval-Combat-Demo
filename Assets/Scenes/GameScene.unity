@@ -129,6 +129,7 @@ GameObject:
   m_Component:
   - component: {fileID: 95823309}
   - component: {fileID: 95823312}
+  - component: {fileID: 95823313}
   - component: {fileID: 95823310}
   m_Layer: 10
   m_Name: Third Person Aim Camera
@@ -213,6 +214,35 @@ MonoBehaviour:
       BarrelClipping: 0.25
       Anamorphism: 0
   BlendHint: 0
+--- !u!114 &95823313
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 95823308}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f38bda98361e1de48a4ca2bd86ea3c17, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  Composition:
+    ScreenPosition: {x: 0, y: 0}
+    DeadZone:
+      Enabled: 0
+      Size: {x: 0.2, y: 0.2}
+    HardLimits:
+      Enabled: 0
+      Size: {x: 0.8, y: 0.8}
+      Offset: {x: 0, y: 0}
+  CenterOnActivate: 1
+  TargetOffset: {x: 0, y: 0, z: 0}
+  Damping: {x: 0.5, y: 0.5}
+  Lookahead:
+    Enabled: 0
+    Time: 0
+    Smoothing: 0
+    IgnoreY: 0
 --- !u!1 &190956516 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 9137512391486040168, guid: fee78a4c13d3a6d49a7f77210b8303df, type: 3}
@@ -253,6 +283,7 @@ GameObject:
   - component: {fileID: 216665870}
   - component: {fileID: 216665872}
   - component: {fileID: 216665873}
+  - component: {fileID: 216665874}
   m_Layer: 10
   m_Name: Player
   m_TagString: Untagged
@@ -334,7 +365,7 @@ Animator:
   m_Avatar: {fileID: 9000000, guid: 97ada40f57d401540b8eafeeba1f0e9c, type: 3}
   m_Controller: {fileID: 9100000, guid: 95dd6e8ab1a2952429ec13fc52f960b0, type: 2}
   m_CullingMode: 0
-  m_UpdateMode: 0
+  m_UpdateMode: 1
   m_ApplyRootMotion: 0
   m_LinearVelocityBlending: 0
   m_StabilizeFeet: 0
@@ -358,6 +389,19 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   coll: {fileID: 1749602544}
   deactivateOnStart: 1
+--- !u!114 &216665874
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 216665865}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: dbc18ab13645e3f4fb7cddf37af57347, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  health: 10
 --- !u!1 &290576129
 GameObject:
   m_ObjectHideFlags: 0
@@ -1010,7 +1054,7 @@ Transform:
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 5, y: 5, z: 5}
+  m_LocalScale: {x: 10, y: 10, z: 10}
   m_ConstrainProportionsScale: 1
   m_Children: []
   m_Father: {fileID: 0}
@@ -1956,6 +2000,7 @@ GameObject:
   - component: {fileID: 2013923295}
   - component: {fileID: 2013923299}
   - component: {fileID: 2013923300}
+  - component: {fileID: 2013923301}
   m_Layer: 10
   m_Name: Boss
   m_TagString: Untagged
@@ -1993,7 +2038,7 @@ Animator:
   m_Avatar: {fileID: 9000000, guid: 97ada40f57d401540b8eafeeba1f0e9c, type: 3}
   m_Controller: {fileID: 9100000, guid: 95dd6e8ab1a2952429ec13fc52f960b0, type: 2}
   m_CullingMode: 0
-  m_UpdateMode: 0
+  m_UpdateMode: 1
   m_ApplyRootMotion: 0
   m_LinearVelocityBlending: 0
   m_StabilizeFeet: 0
@@ -2057,6 +2102,25 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   health: 10
+--- !u!114 &2013923301
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2013923293}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0d2e47fc994cd254d9f5b236e368a259, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  speed: 5
+  scoutMinTime: 3
+  scoutMaxTime: 6
+  waitTime: 2
+  target: {fileID: 216665869}
+  targetDistance: 1.5
+  maxApproachTime: 3
 --- !u!1001 &2059039616
 PrefabInstance:
   m_ObjectHideFlags: 0
