@@ -15,9 +15,18 @@
                     "initialStateCheck": true
                 },
                 {
-                    "name": "Attack",
+                    "name": "LightAttack",
                     "type": "Button",
                     "id": "8ad7b3c5-d30c-4cef-8349-9f382e1ecb68",
+                    "expectedControlType": "",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": false
+                },
+                {
+                    "name": "HeavyAttack",
+                    "type": "Button",
+                    "id": "eb9698ee-da2e-47aa-8dc2-825d9779b6ba",
                     "expectedControlType": "",
                     "processors": "",
                     "interactions": "",
@@ -92,11 +101,22 @@
                 {
                     "name": "",
                     "id": "b1fe5b88-1af7-4450-aaa0-b3348f3025c2",
-                    "path": "<Keyboard>/enter",
+                    "path": "<Keyboard>/z",
                     "interactions": "",
                     "processors": "",
                     "groups": "",
-                    "action": "Attack",
+                    "action": "LightAttack",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "97526b91-62cc-42d5-a431-c0a415c2e53e",
+                    "path": "<Keyboard>/x",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "HeavyAttack",
                     "isComposite": false,
                     "isPartOfComposite": false
                 },

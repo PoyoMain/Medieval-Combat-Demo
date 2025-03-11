@@ -9,6 +9,7 @@ public interface ICombatant
     public void EndBlock();
 
     public void Hit();
+    public void ShieldHit();
 
     public void StartHitStun();
     public void EndHitStun();

@@ -1,3 +1,4 @@
+using System;
 using UnityEngine;
 
 [RequireComponent(typeof(ICombatant), typeof(Animator))]
@@ -6,11 +7,9 @@ public class Damageable : MonoBehaviour
     [SerializeField] private int health;
 
     private ICombatant combatant;
-    private Animator anim;
 
     private void Awake()
     {
-        TryGetComponent(out anim);
         TryGetComponent(out combatant);
     }
 
@@ -20,22 +19,34 @@ public class Damageable : MonoBehaviour
         {
             if (combatant.IsBlocking)
             {
-                ICombatant otherCombatant = other.GetComponentInParent<ICombatant>();
-                otherCombatant?.Hit();
+                if (dmgComponent.Damage == 2)
+                {
+                    combatant.Hit();
+                }
+                else
+                {
+                    ICombatant otherCombatant = other.GetComponentInParent<ICombatant>();
+                    otherCombatant?.Hit();
+                    combatant.ShieldHit();
+                }
+                
             }
             else
             {
                 combatant.Hit();
                 health -= dmgComponent.Damage;
+
+                if (health <= 0)
+                {
+                    Die();
+                }
             }
         }
     }
 
-    private void OnCollisionEnter(Collision collision)
+    private void Die()
     {
-        if (collision.gameObject.TryGetComponent(out DamageComponent dmgComponent))
-        {
-            health -= dmgComponent.Damage;
-        }
+        
     }
+
 }

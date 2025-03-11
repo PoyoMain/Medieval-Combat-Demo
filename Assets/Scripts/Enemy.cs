@@ -140,8 +140,6 @@ public class Enemy : MonoBehaviour, ICombatant
         {
             ChangeState(State.DoingAction);
         }
-
-        print(distanceToPlayer);
     }
 
     #endregion
@@ -154,7 +152,10 @@ public class Enemy : MonoBehaviour, ICombatant
 
     private void Attack()
     {
-        anim.SetTrigger("Attack");
+        int choice = Random.Range(0, 2);
+        
+        if (choice == 0) anim.SetTrigger("LightAttack");
+        else anim.SetTrigger("HeavyAttack");
     }
 
     private void Block()
@@ -176,11 +177,13 @@ public class Enemy : MonoBehaviour, ICombatant
     public void StartBlock()
     {
         isBlocking = true;
+        anim.SetBool("Blocking", true);
     }
 
     public void EndBlock()
     {
         isBlocking = false;
+        anim.SetBool("Blocking", false);
         ChangeState(State.Waiting);
     }
 
@@ -195,6 +198,13 @@ public class Enemy : MonoBehaviour, ICombatant
         anim.SetTrigger("Hit");
         anim.SetFloat("MoveInputX", 0);
         anim.SetFloat("MoveInputY", 0);
+    }
+
+    public void ShieldHit()
+    {
+        anim.SetTrigger("ShieldHit");
+        int choice = Random.Range(0, 2);
+        if (choice == 0) anim.SetTrigger("LightAttack");
     }
 
     public void HandleHitStun()

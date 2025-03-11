@@ -17,7 +17,8 @@ public class Player : MonoBehaviour, ICombatant
 
     private Vector2 moveInput;
     private Vector3 velocity;
-    private bool attackDown;
+    private bool lightAttackDown;
+    private bool heavyAttackDown;
     private bool blockDown;
 
     private Rigidbody rb;
@@ -44,7 +45,8 @@ public class Player : MonoBehaviour, ICombatant
     private void GetInput()
     {
         moveInput = controls.Move.ReadValue<Vector2>();
-        attackDown = controls.Attack.WasPressedThisFrame();
+        lightAttackDown = controls.LightAttack.WasPressedThisFrame();
+        heavyAttackDown = controls.HeavyAttack.WasPressedThisFrame();
         blockDown = controls.Block.WasPressedThisFrame();
     }
 
@@ -65,10 +67,10 @@ public class Player : MonoBehaviour, ICombatant
 
     private void HandleAttacking()
     {
-        if (attackDown && !isAttacking && !isBlocking)
-        {
-            anim.SetTrigger("Attack");
-        }
+        if (isAttacking) return;
+
+        if (lightAttackDown) anim.SetTrigger("LightAttack");
+        else if (heavyAttackDown) anim.SetTrigger("HeavyAttack");
     }
 
     public void StartAttack()
@@ -98,11 +100,13 @@ public class Player : MonoBehaviour, ICombatant
     public void StartBlock()
     {
         isBlocking = true;
+        anim.SetBool("Blocking", true);
     }
 
     public void EndBlock()
     {
         isBlocking = false;
+        anim.SetBool("Blocking", false);
     }
 
     #endregion
@@ -149,6 +153,11 @@ public class Player : MonoBehaviour, ICombatant
     public void EndHitStun()
     {
         inHitStun = false;
+    }
+
+    public void ShieldHit()
+    {
+        anim.SetTrigger("ShieldHit");
     }
 
     #endregion

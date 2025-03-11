@@ -2,23 +2,40 @@ using UnityEngine;
 
 public class ColliderActivator : MonoBehaviour
 {
-    [SerializeField] private Collider coll;
+    [SerializeField] private Collider lightAttackColl;
+    [SerializeField] private Collider heavyAttackColl;
     [SerializeField] private bool deactivateOnStart;
 
     private void Start()
     {
-        if (deactivateOnStart) DeactivateCollider();
+        if (deactivateOnStart)
+        {
+            DeactivateLightCollider();
+            DeactivateHeavyCollider();
+        }
     }
 
     [ContextMenu("Ignore")]
-    private void ActivateCollider()
+    private void ActivateLightCollider()
     {
-        coll.enabled = true;
+        lightAttackColl.enabled = true;
     }
 
     [ContextMenu("Ignore")]
-    private void DeactivateCollider()
+    private void DeactivateLightCollider()
     {
-        coll.enabled = false;
+        lightAttackColl.enabled = false;
+    }
+
+    [ContextMenu("Ignore")]
+    private void ActivateHeavyCollider()
+    {
+        heavyAttackColl.enabled = true;
+    }
+
+    [ContextMenu("Ignore")]
+    private void DeactivateHeavyCollider()
+    {
+        heavyAttackColl.enabled = false;
     }
 }
