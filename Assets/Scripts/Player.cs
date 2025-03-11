@@ -86,7 +86,7 @@ public class Player : MonoBehaviour, ICombatant
     #region Blocking
 
     private bool isBlocking;
-
+    public bool IsBlocking => isBlocking;
     private void HandleBlocking()
     {
         if (blockDown && !isBlocking && !isAttacking)
@@ -111,7 +111,7 @@ public class Player : MonoBehaviour, ICombatant
 
     private void HandleMovement()
     {
-        if (isAttacking) return;
+        if (isAttacking || inHitStun) return;
 
         Vector3 moveVector = new(moveInput.x, 0, moveInput.y);
         transform.Translate(movementSpeed * Time.deltaTime * moveVector, Space.Self);
@@ -128,6 +128,27 @@ public class Player : MonoBehaviour, ICombatant
     {
         Vector3 targetPosition = new(target.position.x, transform.position.y, target.position.z);
         transform.LookAt(targetPosition, Vector3.up);
+    }
+
+    #endregion
+
+    #region Hit
+
+    private bool inHitStun;
+
+    public void Hit()
+    {
+        anim.SetTrigger("Hit");
+    }
+
+    public void StartHitStun()
+    {
+        inHitStun = true;
+    }
+
+    public void EndHitStun()
+    {
+        inHitStun = false;
     }
 
     #endregion

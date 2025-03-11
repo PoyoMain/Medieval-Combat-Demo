@@ -41,6 +41,10 @@ public class Enemy : MonoBehaviour, ICombatant
         {
             HandleApproaching();
         }
+        else if (state == State.InHitStun)
+        {
+            HandleHitStun();
+        }
     }
 
     #region State Changing
@@ -62,10 +66,12 @@ public class Enemy : MonoBehaviour, ICombatant
                 anim.SetFloat("MoveInputY", 0);
                 break;
             case State.DoingAction:
-                int choice = Random.Range(0,2) == 0 ? 0 : 1;
+                int choice = Random.Range(0, 2) == 0 ? 0 : 1;
 
                 if (choice == 0) Attack();
                 else Block();
+                break;
+            case State.InHitStun:
                 break;
         }
     }
@@ -144,6 +150,7 @@ public class Enemy : MonoBehaviour, ICombatant
 
     private bool isAttacking;
     private bool isBlocking;
+    public bool IsBlocking => isBlocking;
 
     private void Attack()
     {
@@ -179,6 +186,37 @@ public class Enemy : MonoBehaviour, ICombatant
 
     #endregion
 
+    #region Hit
+
+    private bool inHitStun;
+
+    public void Hit()
+    {
+        anim.SetTrigger("Hit");
+        anim.SetFloat("MoveInputX", 0);
+        anim.SetFloat("MoveInputY", 0);
+    }
+
+    public void HandleHitStun()
+    {
+        if (inHitStun)
+        {
+
+        }
+    }
+
+    public void StartHitStun()
+    {
+        inHitStun = true;
+    }
+
+    public void EndHitStun()
+    {
+        inHitStun = false;
+    }
+
+    #endregion
+
     #region Targeting
 
     private void HandleTargeting()
@@ -189,6 +227,6 @@ public class Enemy : MonoBehaviour, ICombatant
 
     #endregion
 
-    private enum State { Scouting, Approaching, Waiting, DoingAction}
+    private enum State { Scouting, Approaching, Waiting, DoingAction, InHitStun}
     private enum ScoutDirection { Left, Right, Back}
 }
