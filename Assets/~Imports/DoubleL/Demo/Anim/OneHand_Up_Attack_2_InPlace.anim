@@ -111130,7 +111130,7 @@ AnimationClip:
     floatParameter: 0
     intParameter: 0
     messageOptions: 0
-  - time: 1
+  - time: 1.0666667
     functionName: DeactivateHeavyCollider
     data: 
     objectReferenceParameter: {fileID: 0}
