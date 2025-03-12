@@ -11,4 +11,6 @@ public interface ICombatant
 
     public void StartHitStun();
     public void EndHitStun();
+
+    public void Die();
 }

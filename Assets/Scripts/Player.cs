@@ -11,6 +11,9 @@ public class Player : MonoBehaviour, ICombatant
     [SerializeField] private Transform target;
     [SerializeField] private float targetingAcceleration;
 
+    [Header("Hurtbox")]
+    [SerializeField] private Collider hurtboxCollider;
+
     private PlayerControls playerControls;
     private PlayerControls.GameplayControlsActions controls;
 
@@ -158,6 +161,17 @@ public class Player : MonoBehaviour, ICombatant
     public void ShieldHit()
     {
         anim.SetTrigger("ShieldHit");
+    }
+
+    #endregion
+
+    #region Die
+
+    public void Die()
+    {
+        anim.SetTrigger("Die");
+        hurtboxCollider.enabled = false;
+        this.enabled = false;
     }
 
     #endregion

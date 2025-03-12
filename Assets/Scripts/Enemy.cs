@@ -17,6 +17,9 @@ public class Enemy : MonoBehaviour, ICombatant
     [SerializeField] private float targetDistance;
     [SerializeField] private float maxApproachTime;
 
+    [Header("Hurtbox")]
+    [SerializeField] private Collider hurtboxCollider;
+
     private State state;
 
     private Rigidbody rb;
@@ -227,6 +230,17 @@ public class Enemy : MonoBehaviour, ICombatant
         if (isAttacking || IsWaiting) return;
         Vector3 targetposition = new(target.position.x, transform.position.y, target.position.z);
         transform.LookAt(targetposition, Vector3.up);
+    }
+
+    #endregion
+
+    #region Die
+
+    public void Die()
+    {
+        anim.SetTrigger("Die");
+        hurtboxCollider.enabled = false;
+        this.enabled = false;
     }
 
     #endregion

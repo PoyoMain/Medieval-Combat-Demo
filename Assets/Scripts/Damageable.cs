@@ -45,7 +45,7 @@ public class Damageable : MonoBehaviour
 
     private void Die()
     {
-        
+        combatant.Die();
     }
 
 }
