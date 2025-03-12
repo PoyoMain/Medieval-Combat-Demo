@@ -123,6 +123,8 @@ public class Enemy : MonoBehaviour, ICombatant
 
             if (approachTimer <= 0)
             {
+                anim.SetFloat("MoveInputX", 0);
+                anim.SetFloat("MoveInputY", 0);
                 ChangeState(State.Waiting);
             }
         }
@@ -141,6 +143,8 @@ public class Enemy : MonoBehaviour, ICombatant
         }
         else
         {
+            anim.SetFloat("MoveInputX", 0);
+            anim.SetFloat("MoveInputY", 0);
             ChangeState(State.DoingAction);
         }
     }
@@ -163,6 +167,8 @@ public class Enemy : MonoBehaviour, ICombatant
 
     private void Block()
     {
+        anim.SetFloat("MoveInputX", 0);
+        anim.SetFloat("MoveInputY", 0);
         anim.SetTrigger("Block");
     }
 
