@@ -1,5 +1,3 @@
-using UnityEngine;
-
 public interface ICombatant
 {
     public bool IsBlocking { get; }
