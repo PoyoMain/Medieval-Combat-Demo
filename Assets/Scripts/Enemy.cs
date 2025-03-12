@@ -133,7 +133,8 @@ public class Enemy : MonoBehaviour, ICombatant
         {
             Vector3 directionToPlayer = (target.position - transform.position).normalized;
             Vector3 moveVector = new(Mathf.Abs(directionToPlayer.x), 0, Mathf.Abs(directionToPlayer.z));
-            rb.AddRelativeForce(moveVector * speed, ForceMode.Force);
+            transform.Translate(speed * Time.deltaTime * moveVector, Space.Self);
+            //rb.AddRelativeForce(moveVector * speed, ForceMode.Force);
 
             anim.SetFloat("MoveInputX", moveVector.x);
             anim.SetFloat("MoveInputY", moveVector.z);
