@@ -1,3 +1,5 @@
+using System.Drawing;
+using System.Threading;
 using UnityEngine;
 
 [RequireComponent(typeof(Rigidbody), typeof(ColliderActivator), typeof(Animator))]
@@ -6,9 +8,6 @@ public class Enemy : MonoBehaviour, ICombatant
     [Header("Move Stats")]
     [SerializeField] private float speed;
 
-    [Header("Scout Stats")]
-    [SerializeField] private float scoutMinTime;
-    [SerializeField] private float scoutMaxTime;
 
     [Header("Wait Stats")]
     [SerializeField] private float waitTime;
@@ -64,10 +63,14 @@ public class Enemy : MonoBehaviour, ICombatant
                 break;
             case State.Waiting:
                 waitTimer = waitTime;
+                rb.linearVelocity = Vector3.zero;
                 anim.SetFloat("MoveInputX", 0);
                 anim.SetFloat("MoveInputY", 0);
                 break;
             case State.DoingAction:
+                rb.linearVelocity = Vector3.zero;
+                anim.SetFloat("MoveInputX", 0);
+                anim.SetFloat("MoveInputY", 0);
                 int choice = Random.Range(0, 2) == 0 ? 0 : 1;
 
                 if (choice == 0) Attack();
@@ -80,21 +83,10 @@ public class Enemy : MonoBehaviour, ICombatant
 
     #endregion
 
-    #region Scouting
-
-    private float scoutTimer;
-    private ScoutDirection scoutDirection;
-
-    private void HandleScouting()
-    {
-
-    }
-
-    #endregion
-
     #region Waiting
 
     private float waitTimer;
+    private bool IsWaiting => waitTimer > 0;
 
     private void HandleWaiting()
     {
@@ -123,9 +115,8 @@ public class Enemy : MonoBehaviour, ICombatant
 
             if (approachTimer <= 0)
             {
-                anim.SetFloat("MoveInputX", 0);
-                anim.SetFloat("MoveInputY", 0);
                 ChangeState(State.Waiting);
+                return;
             }
         }
 
@@ -133,18 +124,13 @@ public class Enemy : MonoBehaviour, ICombatant
 
         if (distanceToPlayer > targetDistance)
         {
-            Vector3 directionToPlayer = (target.position - transform.position).normalized;
-            Vector3 moveVector = new(Mathf.Abs(directionToPlayer.x), 0, Mathf.Abs(directionToPlayer.z));
-            transform.Translate(speed * Time.deltaTime * moveVector, Space.Self);
-            //rb.AddRelativeForce(moveVector * speed, ForceMode.Force);
+            rb.linearVelocity = transform.forward * speed;
 
-            anim.SetFloat("MoveInputX", moveVector.x);
-            anim.SetFloat("MoveInputY", moveVector.z);
+            anim.SetFloat("MoveInputX", 0);
+            anim.SetFloat("MoveInputY", 1);
         }
         else
         {
-            anim.SetFloat("MoveInputX", 0);
-            anim.SetFloat("MoveInputY", 0);
             ChangeState(State.DoingAction);
         }
     }
@@ -167,8 +153,6 @@ public class Enemy : MonoBehaviour, ICombatant
 
     private void Block()
     {
-        anim.SetFloat("MoveInputX", 0);
-        anim.SetFloat("MoveInputY", 0);
         anim.SetTrigger("Block");
     }
 
@@ -240,8 +224,9 @@ public class Enemy : MonoBehaviour, ICombatant
 
     private void HandleTargeting()
     {
-        Vector3 targetPosition = new(target.position.x, transform.position.y, target.position.z);
-        transform.LookAt(targetPosition, Vector3.up);
+        if (isAttacking || IsWaiting) return;
+        Vector3 targetposition = new(target.position.x, transform.position.y, target.position.z);
+        transform.LookAt(targetposition, Vector3.up);
     }
 
     #endregion

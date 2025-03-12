@@ -117,8 +117,6 @@ public class Player : MonoBehaviour, ICombatant
         if (isAttacking || inHitStun) return;
 
         Vector3 moveVector = new(moveInput.x, 0, moveInput.y);
-        //transform.Translate(movementSpeed * Time.deltaTime * moveVector, Space.Self);
-        //rb.linearVelocity = transform.InverseTransformPoint(moveVector).normalized * movementSpeed;
         rb.AddRelativeForce(moveVector * movementSpeed, ForceMode.Force);
 
         anim.SetFloat("MoveInputX", moveInput.x);
@@ -131,6 +129,7 @@ public class Player : MonoBehaviour, ICombatant
 
     private void HandleTargeting()
     {
+        if (isAttacking) return;
         Vector3 targetPosition = new(target.position.x, transform.position.y, target.position.z);
         transform.LookAt(targetPosition, Vector3.up);
     }
