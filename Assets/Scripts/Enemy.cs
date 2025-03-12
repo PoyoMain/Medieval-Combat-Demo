@@ -20,10 +20,12 @@ public class Enemy : MonoBehaviour, ICombatant
 
     private State state;
 
+    private Rigidbody rb;
     private Animator anim;
 
     private void Awake()
     {
+        TryGetComponent(out rb);
         TryGetComponent(out anim);
 
         ChangeState(State.Waiting);
@@ -131,7 +133,7 @@ public class Enemy : MonoBehaviour, ICombatant
         {
             Vector3 directionToPlayer = (target.position - transform.position).normalized;
             Vector3 moveVector = new(Mathf.Abs(directionToPlayer.x), 0, Mathf.Abs(directionToPlayer.z));
-            transform.Translate(speed * Time.deltaTime * moveVector, Space.Self);
+            rb.AddRelativeForce(moveVector * speed, ForceMode.Force);
 
             anim.SetFloat("MoveInputX", moveVector.x);
             anim.SetFloat("MoveInputY", moveVector.z);
